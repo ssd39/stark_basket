@@ -13,6 +13,7 @@ trait IBasketRegistry<TContractState> {
         symbol: ByteArray,
         tokens: Array<ContractAddress>, 
         weights: Array<u256>,
+        whitelisted: Array<ContractAddress>,
         salt: felt252,
     ) -> ContractAddress;
 }
@@ -50,6 +51,7 @@ mod BasketRegistry {
             symbol: ByteArray,
             tokens: Array<ContractAddress>, 
             weights: Array<u256>,
+            whitelisted: Array<ContractAddress>,
             salt: felt252,
         ) -> ContractAddress {
             // Validate input
@@ -71,6 +73,7 @@ mod BasketRegistry {
             Serde::serialize(@symbol, ref deployment_call_data);
             Serde::serialize(@tokens, ref deployment_call_data);
             Serde::serialize(@weights, ref deployment_call_data);
+            Serde::serialize(@whitelisted, ref deployment_call_data);
     
             // Deploy new basket token contract
             let (basket_token_address, _) = deploy_syscall(

@@ -87,11 +87,16 @@ mod BasketToken {
         name: ByteArray, 
         symbol: ByteArray, 
         tokens: Array<ContractAddress>,
-        weights: Array<u256>
+        weights: Array<u256>,
+        whitelisted: Array<ContractAddress>
     ) {
         // Initialize ERC20 
         self.erc20.initializer(name, symbol);
         self.tx_count.write(0);
+        for i in 0..whitelisted.len() {
+            let whitelisted_token = *whitelisted.at(i);
+            self.payment_currency.entry(whitelisted_token).write(true);
+        };
         for i in 0..tokens.len() {
             self.basket_tokens.append().write(*tokens.at(i));
         };

@@ -1,3 +1,7 @@
+use starknet::{
+    ContractAddress,
+};
+
 #[starknet::interface]
 trait IToken<TContractState> {
 }
@@ -5,7 +9,7 @@ trait IToken<TContractState> {
 // Basket Token Implementation 
 #[starknet::contract]
 mod Token {
-    use starknet::{get_caller_address};
+    use starknet::{get_caller_address, ContractAddress};
     use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -34,12 +38,12 @@ mod Token {
         ref self: ContractState,
         name: ByteArray, 
         symbol: ByteArray,
-        supply: u256
+        supply: u256,
+        owner: ContractAddress
     ) {
         // Initialize ERC20 
         self.erc20.initializer(name, symbol);
-        let caller = get_caller_address();
-        self.erc20.mint(caller, supply);
+        self.erc20.mint(owner, supply);
     }
 
 }
