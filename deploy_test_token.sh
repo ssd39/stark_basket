@@ -1,0 +1,1 @@
+starkli declare target/dev/stark_basket_Token.contract_class.json --keystore ~/.starkli-wallets/deployer/keystore.json --account ~/.starkli-wallets/deployer/account.json --network=sepolia
