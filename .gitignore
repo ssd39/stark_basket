@@ -1,2 +1,4 @@
 target
 .snfoundry_cache/
+declare_erc20.sh
+notes.txt
